@@ -1,19 +1,19 @@
 import { Button } from "./components/ui/button";
 import { Card } from "./components/ui/card";
-import { Trophy, Zap, Star, Play, TrendingUp, Menu, Calculator } from "lucide-react";
+import { Play, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-100 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-100 font-sans text-gray-800 relative overflow-hidden">
       {/* === Navbar === */}
-      <nav className="relative z-20 bg-white/80 backdrop-blur shadow-md">
-        <div className="max-w-6xl mx-auto px-2 py-3"> {/* Reduced horizontal + vertical padding */}
+      <nav className="relative z-20 bg-amber-50/80 backdrop-blur shadow-md">
+        <div className="max-w-6xl mx-auto px-2 py-3">
           <div className="flex items-center justify-between">
-            {/* Left: Logo — removed unnecessary padding gap */}
+            {/* Left: Logo */}
             <div className="flex items-center gap-2">
-              <span className="text-3xl ml-0">🍌</span> {/* no margin-left */}
-              <span className="text-2xl bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent font-semibold">
+              <span className="text-3xl ml-0">🍌</span>
+              <span className="text-2xl font-semibold bg-gradient-to-r from-yellow-700 to-orange-700 bg-clip-text text-transparent">
                 Banana Brain Challenge
               </span>
             </div>
@@ -34,7 +34,7 @@ export default function App() {
               </a>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu Icon */}
             <Button variant="ghost" size="icon" className="md:hidden">
               <Menu className="h-6 w-6" />
             </Button>
@@ -42,81 +42,60 @@ export default function App() {
         </div>
       </nav>
 
-      {/* === Floating Bananas === */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-10 text-6xl opacity-20"
-          animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
+      {/* === Floating Bananas (Background Animation) === */}
+      <div className="absolute inset-0 pointer-events-none">
+       <motion.div
+        className="absolute top-60 left-10 text-5xl opacity-40"
+        style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
+        animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
+        transition={{ duration: 4, repeat: Infinity }}
         >
-          🍌
-        </motion.div>
+        🍌
+       </motion.div>
+
         <motion.div
-          className="absolute top-40 right-20 text-5xl opacity-20"
-          animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
-        >
-          🍌
-        </motion.div>
-        <motion.div
-          className="absolute bottom-32 left-1/4 text-7xl opacity-20"
-          animate={{ y: [0, -15, 0], rotate: [0, 15, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, delay: 1 }}
-        >
-          🍌
-        </motion.div>
-        <motion.div
-          className="absolute bottom-20 right-1/3 text-5xl opacity-20"
-          animate={{ y: [0, 25, 0], rotate: [0, -15, 0] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-        >
-          🍌
-        </motion.div>
+  className="absolute top-53 right-20 text-5xl opacity-40" // increased opacity for darker look
+  style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
+  animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }} // this animates the banana
+  transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+>
+  🍌
+</motion.div>
+
+
       </div>
 
       {/* === Main Content === */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 text-gray-800 font-normal">
+      <div className="max-w-6xl mx-auto px-4 py-16 text-center relative z-10">
+        {/* Banana Animation */}
+        <motion.div
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+          className="text-8xl mb-6"
+        >
+          🍌
+        </motion.div>
+
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-              className="text-8xl"
-            >
-              🍌
-            </motion.div>
-          </div>
-          <h1 className="text-6xl mb-6 font-extrabold tracking-tight bg-gradient-to-r from-yellow-600 via-orange-600 to-pink-600 bg-clip-text text-transparent font-[Poppins]">
-            Banana Brain Challenge
-          </h1>
-          <p className="text-xl text-gray-700 max-w-2xl mx-auto font-normal mb-10">
-            Put your math skills to the test! Solve equations, beat the clock, and become a mental math master.
-          </p>
-        </motion.div>
+        <h1 className="text-6xl mb-6 font-extrabold tracking-tight bg-gradient-to-r from-yellow-600 via-orange-600 to-pink-600 bg-clip-text text-transparent font-[Poppins]">
+          Banana Brain Challenge
+        </h1>
 
-        {/* Main CTA */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex justify-center mb-8"
-        >
-          <Button
-            size="md"
-            className="flex items-center justify-center whitespace-nowrap text-lg font-bold px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 shadow-md transform hover:scale-105 transition-all"
-          >
-            <Play className="mr-2 h-5 w-5 flex-shrink-0" />
-            <span className="flex-shrink-0">Start Playing</span>
-          </Button>
-        </motion.div>
+        {/* Subtitle */}
+        <p className="text-xl text-gray-700 max-w-2xl mx-auto mb-12 font-normal">
+          Put your math skills to the test! Solve equations, beat the clock, and become a mental math master.
+        </p>
 
-        {/* Instructions */}
+        {/* Start Button */}
+        <Button
+          size="md"
+          className="flex items-center justify-center whitespace-nowrap text-lg font-bold px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 shadow-md transform hover:scale-105 transition-all mx-auto"
+        >
+          <Play className="mr-2 h-5 w-5 flex-shrink-0" />
+          <span className="flex-shrink-0">Start Playing</span>
+        </Button>
+
+        {/* === Instructions Box === */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
