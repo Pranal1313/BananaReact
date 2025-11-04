@@ -2,6 +2,8 @@ import { Button } from "./components/ui/button";
 import { Card } from "./components/ui/card";
 import { Play, Menu } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom"; // add at top of App.jsx
+
 
 export default function App() {
   return (
@@ -29,9 +31,13 @@ export default function App() {
               <a href="#" className="text-gray-700 hover:text-orange-600 transition-colors font-medium">
                 How to Play
               </a>
-              <a href="#" className="text-gray-700 hover:text-orange-600 transition-colors font-medium">
-                About
-              </a>
+<Link
+  to="/signin"
+  className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+>
+  Sign In
+</Link>
+              
             </div>
 
             {/* Mobile Menu Icon */}

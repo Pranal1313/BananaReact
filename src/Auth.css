@@ -1,0 +1,259 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Jost', sans-serif;
+    background-color: #f8e8c5;
+    overflow: hidden;
+    /* Add this line */
+    height: 100%;
+    /* Add this for consistency */
+}
+
+
+/* Center everything */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff8e7;
+}
+
+.auth-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+/* Icon and Titles (outside the card) */
+
+
+/* Circular background for the banana icon */
+
+.auth-icon {
+    font-size: 34px;
+    margin-bottom: 8px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59404, #e58107);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+    box-shadow: 0 4px 12px rgba(251, 140, 0, 0.3);
+}
+
+.auth-title {
+    color: #ea5d00;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.auth-subtitle {
+    color: #555;
+    font-size: 0.95em;
+    margin-bottom: 18px;
+    line-height: 1.4;
+    max-width: 320px;
+}
+
+
+/* The Card itself (only inputs + button inside) */
+
+.auth-card {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(255, 165, 0, 0.25);
+    border: 2px solid #ff9900;
+    padding: 28px 26px;
+    width: 340px;
+    box-sizing: border-box;
+}
+
+
+/* Form Fields */
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9em;
+    color: #444;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 0.95em;
+    background-color: #fdfdfd;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #ff9900;
+    box-shadow: 0 0 4px rgba(255, 153, 0, 0.4);
+}
+
+
+/* Buttons */
+
+.auth-btn {
+    background-color: #ff7a00;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.auth-btn:hover {
+    background-color: #e37024;
+    transform: scale(1.03);
+}
+
+
+/* Footer link (below card) */
+
+.auth-footer {
+    margin-top: 16px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.link {
+    color: #ff6600;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: #3c1203;
+}
+
+.input-group label {
+    font-weight: bold;
+    color: #512404;
+}
+
+
+/* Make the SignUp card slightly shorter */
+
+.signup-page .auth-card {
+    width: 300px;
+    /* slightly narrower */
+    padding: 20px 20px;
+}
+
+.signup-page .auth-form input {
+    font-size: 0.85em;
+    /* smaller text in inputs */
+    padding: 8px 10px;
+    /* reduce input height */
+}
+
+.signup-page .auth-btn {
+    font-size: 0.9em;
+    /* smaller button text */
+    padding: 8px;
+    /* slightly thinner button */
+}
+
+.signup-page .auth-title {
+    font-size: 1.2em;
+    /* reduce title size */
+}
+
+.signup-page .auth-subtitle {
+    font-size: 0.85em;
+    /* smaller subtitle */
+    margin-bottom: 14px;
+    /* closer to form */
+}
+
+.auth-page {
+    margin-top: -30px;
+    /* or even 40px for closer spacing */
+}
+
+
+/* === Navbar Styles === */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 5px rgba(255, 165, 0, 0.15);
+    z-index: 20;
+}
+
+.navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    margin-top: 2px;
+}
+
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #ae5917, #f75600);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: #444;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #ea580c;
+}
