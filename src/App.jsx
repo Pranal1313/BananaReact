@@ -3,13 +3,11 @@ import { Card } from "./components/ui/card";
 import { Play, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom"; // add at top of App.jsx
-
-
 export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-100 font-sans text-gray-800 relative overflow-hidden">
-      {/* === Navbar === */}
-      <nav className="relative z-20 bg-amber-50/80 backdrop-blur shadow-md">
+<div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-100 font-sans text-gray-800 relative overflow-hidden mt-[-20px]">
+      {/* === Navbar (Fixed) === */}
+      <nav className="fixed top-0 left-0 w-full z-20 bg-amber-50/80 backdrop-blur shadow-md">
         <div className="max-w-6xl mx-auto px-2 py-3">
           <div className="flex items-center justify-between">
             {/* Left: Logo */}
@@ -31,13 +29,12 @@ export default function App() {
               <a href="#" className="text-gray-700 hover:text-orange-600 transition-colors font-medium">
                 How to Play
               </a>
-<Link
-  to="/signin"
-  className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
->
-  Sign In
-</Link>
-              
+              <Link
+                to="/signin"
+                className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+              >
+                Sign In
+              </Link>
             </div>
 
             {/* Mobile Menu Icon */}
@@ -50,29 +47,27 @@ export default function App() {
 
       {/* === Floating Bananas (Background Animation) === */}
       <div className="absolute inset-0 pointer-events-none">
-       <motion.div
-        className="absolute top-60 left-10 text-5xl opacity-40"
-        style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
-        animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
-        transition={{ duration: 4, repeat: Infinity }}
+        <motion.div
+          className="absolute top-60 left-10 text-5xl opacity-40"
+          style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
+          animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
+          transition={{ duration: 4, repeat: Infinity }}
         >
-        🍌
-       </motion.div>
+          🍌
+        </motion.div>
 
         <motion.div
-  className="absolute top-53 right-20 text-5xl opacity-40" // increased opacity for darker look
-  style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
-  animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }} // this animates the banana
-  transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
->
-  🍌
-</motion.div>
-
-
+          className="absolute top-53 right-20 text-5xl opacity-40" // increased opacity for darker look
+          style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
+          animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }} // this animates the banana
+          transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+        >
+          🍌
+        </motion.div>
       </div>
 
       {/* === Main Content === */}
-      <div className="max-w-6xl mx-auto px-4 py-16 text-center relative z-10">
+      <div className="max-w-6xl mx-auto px-4 py-16 text-center relative z-10 mt-20"> {/* Added margin-top to account for fixed navbar */}
         {/* Banana Animation */}
         <motion.div
           animate={{ rotate: [0, 10, -10, 0] }}

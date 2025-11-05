@@ -1,24 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Auth.css";
-
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
 
+  useEffect(() => {
+    // Disable scrolling only on the Auth page
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      // Re-enable scrolling when leaving the Auth page
+      document.body.style.overflow = "auto";
+    };
+  }, []);
   return (
     <div className="auth-container">
-      {/* === Navbar (thin banana style) === */}
+      {/* === Navbar === */}
       <nav className="navbar">
         <div className="navbar-inner">
-          {/* Left: Logo */}
           <div className="navbar-logo">
             <span className="logo-icon">🍌</span>
             <span className="logo-text">Banana Brain Challenge</span>
           </div>
-
-          {/* Right: Links */}
           <div className="navbar-links">
-            <a href="#" className="nav-link">Home</a>
+            <Link to="/" className="nav-link">Home</Link>
             <a href="#" className="nav-link">Leaderboard</a>
             <a href="#" className="nav-link">How to Play</a>
             <Link to="/signin" className="nav-link">Sign In</Link>
@@ -30,7 +35,6 @@ export default function Auth() {
       <div className={`auth-page ${!isLogin ? "signup-page" : ""}`}>
         <div className="auth-wrapper">
           <div className="auth-icon">🍌</div>
-
           {isLogin ? (
             <>
               <h2 className="auth-title">Welcome Back!</h2>
@@ -54,16 +58,10 @@ export default function Auth() {
                   <label>Email</label>
                   <input type="email" placeholder="email@example.com" required />
                 </div>
-
                 <div className="input-group">
                   <label>Password</label>
-                  <input
-                    type="password"
-                    placeholder="Enter your password"
-                    required
-                  />
+                  <input type="password" placeholder="Enter your password" required />
                 </div>
-
                 <button type="submit" className="auth-btn">
                   Sign In
                 </button>
@@ -71,28 +69,16 @@ export default function Auth() {
             ) : (
               <form className="auth-form">
                 <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder="Choose a cool username"
-                    required
-                  />
+                  <input type="text" placeholder="Choose a cool username" required />
                 </div>
                 <div className="input-group">
                   <input type="email" placeholder="Type your Email" required />
                 </div>
                 <div className="input-group">
-                  <input
-                    type="password"
-                    placeholder="Create a strong password"
-                    required
-                  />
+                  <input type="password" placeholder="Create a strong password" required />
                 </div>
                 <div className="input-group">
-                  <input
-                    type="password"
-                    placeholder="Confirm your password"
-                    required
-                  />
+                  <input type="password" placeholder="Confirm your password" required />
                 </div>
                 <button type="submit" className="auth-btn">
                   Create Account
@@ -103,7 +89,7 @@ export default function Auth() {
 
           {isLogin ? (
             <p className="auth-footer">
-              Don’t have an account?{" "}
+              Don't have an account?{" "}
               <span className="link" onClick={() => setIsLogin(false)}>
                 Sign up now
               </span>
