@@ -1,0 +1,96 @@
+/* === Navbar Styles === */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 20;
+    background: rgba(255, 251, 235, 0.8);
+    height: 65px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar-container {
+    max-width: 1152px;
+    /* Tailwind's max-w-6xl */
+    margin: 0 auto;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* Logo section */
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-emoji {
+    font-size: 1.8rem;
+}
+
+.navbar-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #b45309, #c2410c);
+    /* from-yellow-700 to-orange-700 */
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+
+/* Links */
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar-link {
+    font-size: 1.10rem;
+    color: #374151;
+    /* gray-700 */
+    font-weight: 550;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.navbar-link:hover {
+    color: #ea580c;
+    /* orange-600 */
+}
+
+
+/* Mobile Menu Button */
+
+.navbar-menu-btn {
+    display: none;
+}
+
+.menu-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+    }
+    .navbar-menu-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+    }
+}

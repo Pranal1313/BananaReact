@@ -1,49 +1,17 @@
+import React from "react";
 import { Button } from "./components/ui/button";
 import { Card } from "./components/ui/card";
 import { Play, Menu } from "lucide-react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom"; // add at top of App.jsx
+import { Link } from "react-router-dom";
+import Navbar from "./components/Navbar"; // Import the reusable Navbar
+
 export default function App() {
   return (
-<div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-100 font-sans text-gray-800 relative overflow-hidden mt-[-20px]">
-      {/* === Navbar (Fixed) === */}
-      <nav className="fixed top-0 left-0 w-full z-20 bg-amber-50/80 backdrop-blur shadow-md">
-        <div className="max-w-6xl mx-auto px-2 py-3">
-          <div className="flex items-center justify-between">
-            {/* Left: Logo */}
-            <div className="flex items-center gap-2">
-              <span className="text-3xl ml-0">🍌</span>
-              <span className="text-2xl font-semibold bg-gradient-to-r from-yellow-700 to-orange-700 bg-clip-text text-transparent">
-                Banana Brain Challenge
-              </span>
-            </div>
-
-            {/* Right: Navbar Links */}
-            <div className="hidden md:flex items-center gap-8 text-lg">
-              <a href="#" className="text-gray-700 hover:text-orange-600 transition-colors font-medium">
-                Home
-              </a>
-              <a href="#" className="text-gray-700 hover:text-orange-600 transition-colors font-medium">
-                Leaderboard
-              </a>
-              <a href="#" className="text-gray-700 hover:text-orange-600 transition-colors font-medium">
-                How to Play
-              </a>
-              <Link
-                to="/signin"
-                className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
-              >
-                Sign In
-              </Link>
-            </div>
-
-            {/* Mobile Menu Icon */}
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-6 w-6" />
-            </Button>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-100 font-sans text-gray-800 relative overflow-hidden mt-[-20px]">
+      
+      {/* === Navbar === */}
+      <Navbar />
 
       {/* === Floating Bananas (Background Animation) === */}
       <div className="absolute inset-0 pointer-events-none">
@@ -57,9 +25,9 @@ export default function App() {
         </motion.div>
 
         <motion.div
-          className="absolute top-53 right-20 text-5xl opacity-40" // increased opacity for darker look
+          className="absolute top-53 right-20 text-5xl opacity-40"
           style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.6)' }}
-          animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }} // this animates the banana
+          animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
           transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
         >
           🍌
@@ -67,7 +35,8 @@ export default function App() {
       </div>
 
       {/* === Main Content === */}
-      <div className="max-w-6xl mx-auto px-4 py-16 text-center relative z-10 mt-20"> {/* Added margin-top to account for fixed navbar */}
+      <div className="max-w-6xl mx-auto px-4 py-16 text-center relative z-10 mt-20">
+        
         {/* Banana Animation */}
         <motion.div
           animate={{ rotate: [0, 10, -10, 0] }}
@@ -88,13 +57,15 @@ export default function App() {
         </p>
 
         {/* Start Button */}
-        <Button
-          size="md"
-          className="flex items-center justify-center whitespace-nowrap text-lg font-bold px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 shadow-md transform hover:scale-105 transition-all mx-auto"
-        >
-          <Play className="mr-2 h-5 w-5 flex-shrink-0" />
-          <span className="flex-shrink-0">Start Playing</span>
-        </Button>
+        <Link to="/game" style={{ textDecoration: "none" }}>
+          <Button
+            size="md"
+            className="flex items-center justify-center whitespace-nowrap text-lg font-bold px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 shadow-md transform hover:scale-105 transition-all mx-auto"
+          >
+            <Play className="mr-2 h-5 w-5 flex-shrink-0" />
+            <span className="flex-shrink-0">Start Playing</span>
+          </Button>
+        </Link>
 
         {/* === Instructions Box === */}
         <motion.div
@@ -111,13 +82,10 @@ export default function App() {
               <p className="text-center text-lg font-normal">
                 Welcome to the Banana Brain Challenge! 🍌
               </p>
-
               <ul className="space-y-3 text-lg font-normal">
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
-                  <span>
-                    You will be given <strong>5 math equations</strong> to solve.
-                  </span>
+                  <span>You will be given <strong>5 math equations</strong> to solve.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
@@ -125,25 +93,17 @@ export default function App() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
-                  <span>
-                    Your goal is to finish all 5 correctly in the{" "}
-                    <strong>shortest possible time</strong>.
-                  </span>
+                  <span>Your goal is to finish all 5 correctly in the <strong>shortest possible time</strong>.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
-                  <span>
-                    For each wrong answer, a{" "}
-                    <strong>+5 second penalty</strong> will be added to your
-                    total time.
-                  </span>
+                  <span>For each wrong answer, a <strong>+5 second penalty</strong> will be added to your total time.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
                   <span>The player with the lowest final time wins! 🏆</span>
                 </li>
               </ul>
-
               <p className="text-center text-lg pt-4 font-normal">
                 💡 Think fast, stay sharp, and aim for the fastest brain! ⚡
               </p>
