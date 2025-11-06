@@ -22,7 +22,7 @@ export default function Navbar() {
           <Link to="/game" className="navbar-link">
             Game
           </Link>
-          <Link to="/leaderboard" className="navbar-link">
+          <Link to="/Leaderboard" className="navbar-link">
             Leaderboard
           </Link>
           <Link to="/auth" className="navbar-link">

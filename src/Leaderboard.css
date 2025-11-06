@@ -1,0 +1,189 @@
+/* === Page Background === */
+
+.leaderboard-page {
+    min-height: 100vh;
+    background: #fff7ed;
+    font-family: "Poppins", sans-serif;
+    color: #333;
+}
+
+
+/* === Container === */
+
+.leaderboard-container {
+    max-width: 800px;
+    margin: 66px auto;
+    /* ⬅️ increased from 60px for spacing below navbar */
+    padding: 30px;
+    text-align: center;
+    background: #fffaf0;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+
+/* === Header Section === */
+
+.header-section {
+    margin-bottom: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* === Trophy Circle Background === */
+
+.trophy-icon {
+    position: relative;
+    /* Make this relative for absolute ::before */
+    display: inline-block;
+    /* Needed for positioning pseudo */
+    font-size: 3rem;
+    background: linear-gradient(45deg, #fb923c, #e29105);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.trophy-icon::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 85px;
+    height: 85px;
+    background: radial-gradient(circle, #fff7db 30%, #fcd34d 90%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    box-shadow: 0 0 15px rgba(249, 187, 45, 0.4);
+}
+
+.header-section h2 {
+    color: #584e4e;
+    font-size: 1.8rem;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 1rem;
+}
+
+
+/* === Table === */
+
+.table {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #edac07, #fb923c);
+    color: white;
+    font-weight: 600;
+    padding: 12px 20px;
+}
+
+.table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f1f1;
+    transition: background 0.2s ease;
+}
+
+.table-row:hover {
+    background: #fff7e6;
+}
+
+
+/* === Columns === */
+
+.col-rank,
+.col-player,
+.col-time {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.col-rank {
+    width: 80px;
+    justify-content: center;
+}
+
+.col-player {
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.col-time {
+    width: 120px;
+    justify-content: flex-end;
+}
+
+
+/* === Rank Medals === */
+
+.medal {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background: #fbbf24;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gold .medal {
+    background: rgb(255, 213, 0);
+}
+
+.silver .medal {
+    background: silver;
+}
+
+.bronze .medal {
+    background: #9f6226;
+}
+
+
+/* === Avatar + Player Name === */
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: #f6dd78;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #b45309;
+}
+
+.name {
+    font-weight: 600;
+    color: #333;
+}
+
+
+/* === Clock Icon === */
+
+.clock {
+    font-size: 1rem;
+    margin-right: 4px;
+}

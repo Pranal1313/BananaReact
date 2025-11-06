@@ -97,7 +97,7 @@ export default function App() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
-                  <span>For each wrong answer, a <strong>+5 second penalty</strong> will be added to your total time.</span>
+                  <span>For each wrong answer, a <strong>+15 second penalty</strong> will be added to your total time.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
@@ -105,7 +105,7 @@ export default function App() {
                 </li>
               </ul>
               <p className="text-center text-lg pt-4 font-normal">
-                💡 Think fast, stay sharp, and aim for the fastest brain! ⚡
+                💡 Think fast, stay sharp, and aim for the leaderboard ! ⚡
               </p>
             </div>
           </Card>
