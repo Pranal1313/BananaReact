@@ -9,8 +9,11 @@ export default function Game() {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(true);
   const [seconds, setSeconds] = useState(0);
+  const [questionCount, setQuestionCount] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+  const [penalty, setPenalty] = useState(0);
 
-  // Fetch puzzle from Banana API
+  // Fetch a puzzle
   const fetchPuzzle = async () => {
     try {
       setLoading(true);
@@ -18,95 +21,124 @@ export default function Game() {
       setPuzzle(res.data);
       setFeedback("");
       setAnswer("");
-      setSeconds(0); // Reset timer when new puzzle loads
+      setLoading(false);
     } catch (err) {
-      console.error("Error fetching puzzle:", err);
       setFeedback("⚠️ Could not load puzzle. Please try again.");
-    } finally {
       setLoading(false);
     }
   };
 
-  // Load puzzle on first render
+  // Load the first puzzle
   useEffect(() => {
     fetchPuzzle();
   }, []);
 
-  // Simple timer count-up
+  // Timer
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (isFinished) return;
+    const timer = setInterval(() => {
       setSeconds((prev) => prev + 1);
     }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(timer);
+  }, [isFinished]);
 
   const checkAnswer = () => {
-    if (!puzzle) return;
-
+    if (!puzzle || isFinished) return;
     const userAnswer = parseInt(answer, 10);
+
     if (isNaN(userAnswer)) {
       setFeedback("❌ Please enter a number!");
       return;
     }
 
     if (userAnswer === puzzle.solution) {
-      setFeedback("✅ Correct! Great job!");
+      setFeedback("✅ Correct!");
+      const nextCount = questionCount + 1;
+
+      if (nextCount < 5) {
+        setQuestionCount(nextCount);
+        fetchPuzzle();
+      } else {
+        setIsFinished(true);
+      }
     } else {
-      setFeedback("❌ Wrong! Try again!");
+      setFeedback("❌ Wrong! +15 sec penalty added!");
+      setPenalty((prev) => prev + 15);
     }
+
+    setAnswer("");
   };
 
-  // Format seconds as two-digit string
-  const formattedTime = seconds < 10 ? `0${seconds}` : seconds;
+  const finalTime = seconds + penalty;
+
+  // Format seconds
+  const formatTime = (t) => (t < 10 ? `0${t}` : t);
 
   return (
     <div className="game-page">
-      {/* Timer Display top-right */}
-      <div className="timer-display" aria-label="Timer">
-        ⏱️: {formattedTime}
-      </div>
+      {/* Timer */}
+      <div className="timer-display">⏱️ {formatTime(seconds)}s</div>
 
-      {/* Navbar */}
       <Navbar />
 
       <div className="game-container">
-        <h1 className="title">Round 1</h1>
+        <h1 className="title">🍌 Banana Brain Challenge 🍌</h1>
 
-        {loading ? (
-          <p className="loading-text">Loading puzzle...</p>
-        ) : (
+        {!isFinished ? (
           <>
-            {/* Puzzle Image */}
-            <div className="puzzle-section">
-              <img
-                src={puzzle?.question}
-                alt="Banana Puzzle"
-                className="puzzle-image"
-              />
-            </div>
+            <p className="instructions">
+              Solve 5 puzzles as fast as you can! Wrong answers = +15s ⏱️
+            </p>
+            <h2>Question {questionCount + 1} / 5</h2>
 
-            {/* Input Section */}
-            <div className="input-section">
-              <input
-                type="number"
-                placeholder="Enter your answer"
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                className="answer-input"
-              />
-              <div className="buttons">
-                <button onClick={checkAnswer} className="btn check">
-                  Enter
-                </button>
-                <button onClick={fetchPuzzle} className="btn next">
-                  Next Puzzle
-                </button>
-              </div>
-            </div>
+            {loading ? (
+              <p className="loading-text">Loading puzzle...</p>
+            ) : (
+              <>
+                <div className="puzzle-section">
+                  <img
+                    src={puzzle?.question}
+                    alt="Banana Puzzle"
+                    className="puzzle-image"
+                  />
+                </div>
 
-            {/* Feedback */}
-            <p className="feedback">{feedback}</p>
+                <div className="input-section">
+                  <input
+                    type="number"
+                    placeholder="Enter your answer"
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    className="answer-input"
+                  />
+                  <button onClick={checkAnswer} className="btn check">
+                    Submit
+                  </button>
+                </div>
+
+                <p className="feedback">{feedback}</p>
+              </>
+            )}
           </>
+        ) : (
+          <div className="results-section">
+            <h2>🏁 Challenge Complete!</h2>
+            <p>Total Time: {seconds}s</p>
+            <p>Penalty Time: +{penalty}s</p>
+            <h3>🎯 Final Time: {finalTime}s</h3>
+            <button
+              onClick={() => {
+                setIsFinished(false);
+                setSeconds(0);
+                setPenalty(0);
+                setQuestionCount(0);
+                fetchPuzzle();
+              }}
+              className="btn restart"
+            >
+              Play Again
+            </button>
+          </div>
         )}
       </div>
     </div>

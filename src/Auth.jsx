@@ -1,9 +1,36 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/Navbar"; // Import shared navbar
-import "./Auth.css"; // 👈 Import Auth page styles
+import Navbar from "./components/Navbar";
+import "./Auth.css";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
+  const [form, setForm] = useState({ username: "", email: "", password: "", confirm: "" });
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const action = isLogin ? "login" : "signup";
+    const response = await fetch("http://localhost/BananaReact/backend/auth.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action,
+        username: form.username,
+        email: form.email,
+        password: form.password,
+      }),
+    });
+
+    const data = await response.json();
+    alert(data.message);
+
+    if (data.status === "success" && isLogin) {
+      // Example redirect
+      window.location.href = "/";
+    }
+  };
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -13,13 +40,9 @@ export default function Auth() {
   }, []);
 
   return (
-
-    
     <div className="auth-container">
-      {/* Shared Navbar */}
       <Navbar hideAuthLink />
 
-      {/* Auth Page Layout */}
       <div className={`auth-page ${!isLogin ? "signup-page" : ""}`}>
         <div className="auth-wrapper">
           <div className="auth-icon">🍌</div>
@@ -35,37 +58,52 @@ export default function Auth() {
             </>
           )}
 
-          {/* Auth Form */}
           <div className="auth-card">
-            {isLogin ? (
-              <form className="auth-form">
+            <form className="auth-form" onSubmit={handleSubmit}>
+              {!isLogin && (
                 <div className="input-group">
-                  <label>Email</label>
-                  <input type="email" placeholder="email@example.com" required />
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Choose a cool username"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
+              )}
+              <div className="input-group">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="email@example.com"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder={isLogin ? "Enter your password" : "Create a strong password"}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {!isLogin && (
                 <div className="input-group">
-                  <label>Password</label>
-                  <input type="password" placeholder="Enter your password" required />
+                  <input
+                    type="password"
+                    name="confirm"
+                    placeholder="Confirm your password"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-                <button type="submit" className="auth-btn">Sign In</button>
-              </form>
-            ) : (
-              <form className="auth-form">
-                <div className="input-group">
-                  <input type="text" placeholder="Choose a cool username" required />
-                </div>
-                <div className="input-group">
-                  <input type="email" placeholder="Type your Email" required />
-                </div>
-                <div className="input-group">
-                  <input type="password" placeholder="Create a strong password" required />
-                </div>
-                <div className="input-group">
-                  <input type="password" placeholder="Confirm your password" required />
-                </div>
-                <button type="submit" className="auth-btn">Create Account</button>
-              </form>
-            )}
+              )}
+              <button type="submit" className="auth-btn">
+                {isLogin ? "Sign In" : "Create Account"}
+              </button>
+            </form>
           </div>
 
           {isLogin ? (
