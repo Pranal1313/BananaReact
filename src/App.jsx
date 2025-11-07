@@ -85,7 +85,7 @@ export default function App() {
               <ul className="space-y-3 text-lg font-normal">
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
-                  <span>You will be given <strong>5 math equations</strong> to solve.</span>
+                  <span>You will be given <strong>3 math equations</strong> to solve.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
@@ -93,11 +93,11 @@ export default function App() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
-                  <span>Your goal is to finish all 5 correctly in the <strong>shortest possible time</strong>.</span>
+                  <span>Your goal is to finish all 3 correctly in the <strong>shortest possible time</strong>.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
-                  <span>For each wrong answer, a <strong>+15 second penalty</strong> will be added to your total time.</span>
+                  <span>For each wrong answer, a <strong>+30 second penalty</strong> will be added to your total time.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-yellow-600 mt-1">•</span>
@@ -105,7 +105,7 @@ export default function App() {
                 </li>
               </ul>
               <p className="text-center text-lg pt-4 font-normal">
-                💡 Think fast, stay sharp, and aim for the leaderboard ! ⚡
+                💡 Think fast, stay sharp, and aim for the Leaderboard ! ⚡
               </p>
             </div>
           </Card>

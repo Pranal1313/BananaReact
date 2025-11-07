@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
+import { useNavigate } from "react-router-dom";
 import "./Game.css";
 
 export default function Game() {
@@ -13,7 +14,9 @@ export default function Game() {
   const [isFinished, setIsFinished] = useState(false);
   const [penalty, setPenalty] = useState(0);
 
-  // Fetch a puzzle
+  const navigate = useNavigate();
+
+  // Fetch puzzle
   const fetchPuzzle = async () => {
     try {
       setLoading(true);
@@ -28,7 +31,7 @@ export default function Game() {
     }
   };
 
-  // Load the first puzzle
+  // Load first puzzle
   useEffect(() => {
     fetchPuzzle();
   }, []);
@@ -42,10 +45,22 @@ export default function Game() {
     return () => clearInterval(timer);
   }, [isFinished]);
 
+  // Handle Enter key for submit
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter" && !isFinished) {
+        checkAnswer();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  });
+
+  // Check answer
   const checkAnswer = () => {
     if (!puzzle || isFinished) return;
-    const userAnswer = parseInt(answer, 10);
 
+    const userAnswer = parseInt(answer, 10);
     if (isNaN(userAnswer)) {
       setFeedback("❌ Please enter a number!");
       return;
@@ -55,92 +70,110 @@ export default function Game() {
       setFeedback("✅ Correct!");
       const nextCount = questionCount + 1;
 
-      if (nextCount < 5) {
-        setQuestionCount(nextCount);
-        fetchPuzzle();
+      if (nextCount < 3) {
+        setTimeout(() => {
+          setQuestionCount(nextCount);
+          fetchPuzzle();
+        }, 1000);
       } else {
         setIsFinished(true);
       }
     } else {
-      setFeedback("❌ Wrong! +15 sec penalty added!");
-      setPenalty((prev) => prev + 15);
+      setFeedback("❌ Wrong! +30s penalty!");
+      setPenalty((prev) => prev + 30);
+
+      setTimeout(() => {
+        fetchPuzzle();
+      }, 1000);
     }
 
     setAnswer("");
   };
 
-  const finalTime = seconds + penalty;
+  // Restart game
+  const handleRestart = () => {
+    setQuestionCount(0);
+    setSeconds(0);
+    setPenalty(0);
+    setIsFinished(false);
+    fetchPuzzle();
+  };
 
-  // Format seconds
+  const finalTime = seconds + penalty;
   const formatTime = (t) => (t < 10 ? `0${t}` : t);
 
   return (
     <div className="game-page">
-      {/* Timer */}
+      {/* Restart button (top-left) */}
+      <div className="restart-button">
+        🔁 <button onClick={handleRestart}>Restart</button>
+      </div>
+
+      {/* Timer (top-right) */}
       <div className="timer-display">⏱️ {formatTime(seconds)}s</div>
 
       <Navbar />
 
-      <div className="game-container">
-        <h1 className="title">🍌 Banana Brain Challenge 🍌</h1>
+      {/* Game content */}
+      {!isFinished ? (
+        <div className="game-container">
+          <h2>Round {questionCount + 1}</h2>
 
-        {!isFinished ? (
-          <>
-            <p className="instructions">
-              Solve 5 puzzles as fast as you can! Wrong answers = +15s ⏱️
-            </p>
-            <h2>Question {questionCount + 1} / 5</h2>
+          {loading ? (
+            <p className="loading-text">Loading puzzle...</p>
+          ) : (
+            <>
+              <div className="puzzle-section">
+                <img
+                  src={puzzle?.question}
+                  alt="Banana Puzzle"
+                  className="puzzle-image"
+                />
+              </div>
 
-            {loading ? (
-              <p className="loading-text">Loading puzzle...</p>
-            ) : (
-              <>
-                <div className="puzzle-section">
-                  <img
-                    src={puzzle?.question}
-                    alt="Banana Puzzle"
-                    className="puzzle-image"
-                  />
-                </div>
+              <div className="input-section">
+                <input
+                  type="number"
+                  placeholder="Enter your answer"
+                  value={answer}
+                  onChange={(e) => setAnswer(e.target.value)}
+                  className="answer-input"
+                />
+                <button onClick={checkAnswer} className="btn check">
+                  Submit
+                </button>
+              </div>
 
-                <div className="input-section">
-                  <input
-                    type="number"
-                    placeholder="Enter your answer"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    className="answer-input"
-                  />
-                  <button onClick={checkAnswer} className="btn check">
-                    Submit
-                  </button>
-                </div>
+              <p className="feedback">{feedback}</p>
+            </>
+          )}
+        </div>
+      ) : (
+        // === Result Section (moved outside game-container) ===
+        <div className="result-section">
+          <h2 className="result-title">🎉 Challenge Complete!</h2>
 
-                <p className="feedback">{feedback}</p>
-              </>
-            )}
-          </>
-        ) : (
-          <div className="results-section">
-            <h2>🏁 Challenge Complete!</h2>
-            <p>Total Time: {seconds}s</p>
-            <p>Penalty Time: +{penalty}s</p>
-            <h3>🎯 Final Time: {finalTime}s</h3>
-            <button
-              onClick={() => {
-                setIsFinished(false);
-                setSeconds(0);
-                setPenalty(0);
-                setQuestionCount(0);
-                fetchPuzzle();
-              }}
-              className="btn restart"
-            >
+          <p className="result-summary">
+            ⏱️ Your Time: <span className="result-highlight">{seconds}s</span>
+          </p>
+          <p className="result-summary">
+            ⚠️ Penalty Time: <span className="result-highlight">{penalty}s</span>
+          </p>
+          <p className="result-summary total">
+            🏁 Final Score = {seconds}s + {penalty}s ={" "}
+            <span className="result-highlight">{finalTime}s</span>
+          </p>
+
+          <div className="result-buttons">
+            <button className="btn play-again" onClick={handleRestart}>
               Play Again
             </button>
+            <button className="btn home" onClick={() => navigate("/")}>
+              Go Home
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
