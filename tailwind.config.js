@@ -9,6 +9,8 @@ export default {
             fontFamily: {
                 'banana': ['"Fredoka One"', 'cursive'],
                 'roboto': ['Roboto', 'sans-serif'],
+                'lobster': ['Lobster', 'cursive'],
+                'bangers': ['Bangers', 'cursive'],
             },
         },
     },
