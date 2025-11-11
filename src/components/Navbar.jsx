@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Menu } from "lucide-react";
-import { Link } from "react-router-dom";
-import "./Navbar.css"; 
-import { auth } from "../firebaseConfig";
+import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebaseConfig";
+import "./Navbar.css";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -19,8 +20,10 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      setUser(null);
+      navigate("/auth"); // redirect to login page
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("Error logging out:", error);
     }
   };
 
@@ -35,21 +38,24 @@ export default function Navbar() {
 
         {/* Right: Links */}
         <div className="navbar-links">
-          <Link to="/" className="navbar-link">Home</Link>
-          <Link to="/game" className="navbar-link">Game</Link>
-          <Link to="/Leaderboard" className="navbar-link">Leaderboard</Link>
+          <Link to="/" className="navbar-link">
+            Home
+          </Link>
+          <Link to="/game" className="navbar-link">
+            Game
+          </Link>
+          <Link to="/Leaderboard" className="navbar-link">
+            Leaderboard
+          </Link>
 
-          {!user && (
-            <Link to="/auth" className="navbar-link">Login</Link>
-          )}
-
-          {user && (
-            <span 
-              className="navbar-link cursor-pointer"
-              onClick={handleLogout}
-            >
+          {user ? (
+            <button onClick={handleLogout} className="navbar-link logout-btn">
               Logout
-            </span>
+            </button>
+          ) : (
+            <Link to="/auth" className="navbar-link">
+              Login
+            </Link>
           )}
         </div>
 

@@ -2,14 +2,13 @@ body,
 html {
     margin: 0;
     padding: 0;
-    font-family: 'Jost', sans-serif;
+    font-family: "Jost", sans-serif;
     background-color: #f8e8c5;
     height: 100%;
-    /* Add this for consistency */
 }
 
 .auth-page {
-    margin-top: 30px;
+    margin-top: 25px;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -24,12 +23,6 @@ html {
     text-align: center;
     overflow: hidden;
 }
-
-
-/* Icon and Titles (outside the card) */
-
-
-/* Circular background for the banana icon */
 
 .auth-icon {
     font-size: 34px;
@@ -60,9 +53,6 @@ html {
     max-width: 320px;
 }
 
-
-/* The Card itself (only inputs + button inside) */
-
 .auth-card {
     background: #fff;
     border-radius: 25px;
@@ -73,9 +63,6 @@ html {
     box-sizing: border-box;
 }
 
-
-/* Form Fields */
-
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -84,14 +71,6 @@ html {
 
 .input-group {
     text-align: left;
-}
-
-.input-group label {
-    display: block;
-    font-size: 0.9em;
-    color: #444;
-    margin-bottom: 6px;
-    font-weight: 500;
 }
 
 .input-group input {
@@ -109,9 +88,6 @@ html {
     border-color: #ff9900;
     box-shadow: 0 0 4px rgba(255, 153, 0, 0.4);
 }
-
-
-/* Buttons */
 
 .auth-btn {
     background-color: #ff7a00;
@@ -132,7 +108,33 @@ html {
 }
 
 
-/* Footer link (below card) */
+/* ✅ Google Button Styling */
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #3c4043;
+    font-weight: 500;
+    font-size: 0.95em;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.1s ease;
+    font-family: "Roboto", sans-serif;
+}
+
+.google-btn:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+}
+
+
+/* Footer links */
 
 .auth-footer {
     margin-top: 16px;
@@ -151,42 +153,74 @@ html {
     color: #3c1203;
 }
 
-.input-group label {
-    font-weight: bold;
-    color: #512404;
-}
 
-
-/* Make the SignUp card slightly shorter */
+/* Signup tweaks */
 
 .signup-page .auth-card {
     width: 300px;
-    /* slightly narrower */
     padding: 20px 20px;
 }
 
 .signup-page .auth-form input {
     font-size: 0.85em;
-    /* smaller text in inputs */
     padding: 8px 10px;
-    /* reduce input height */
 }
 
 .signup-page .auth-btn {
     font-size: 0.9em;
-    /* smaller button text */
     padding: 8px;
-    /* slightly thinner button */
+    margin-top: 0px;
 }
 
 .signup-page .auth-title {
     font-size: 1.2em;
-    /* reduce title size */
 }
 
 .signup-page .auth-subtitle {
     font-size: 0.85em;
-    /* smaller subtitle */
     margin-bottom: 14px;
-    /* closer to form */
+}
+
+.signup-page .auth-icon {
+    display: none;
+}
+
+
+/* ✅ Match Google button style to main buttons */
+
+.google-btn.match-auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #3c4043;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 11px;
+    padding: 7px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s, box-shadow 0.2s ease;
+}
+
+.auth-page:not(.signup-page) .google-btn.match-auth {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.google-btn.match-auth:hover {
+    background-color: #f7f7f7;
+    transform: scale(1.03);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-logo {
+    width: 20px;
+    height: 20px;
+}
+
+.auth-page:not(.signup-page) .auth-btn {
+    margin-top: 0px;
 }
