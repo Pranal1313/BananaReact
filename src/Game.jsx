@@ -1,9 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import { useNavigate } from "react-router-dom";
 import "./Game.css";
+import { saveScore } from "./Score"; // ✅ Correct import
+import { auth } from "./firebaseConfig";
 
 export default function Game() {
   const [puzzle, setPuzzle] = useState(null);
@@ -14,10 +15,12 @@ export default function Game() {
   const [questionCount, setQuestionCount] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [penalty, setPenalty] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
 
   const navigate = useNavigate();
 
-  // Fetch puzzle
+  // ✅ Fetch puzzle
   const fetchPuzzle = async () => {
     try {
       setLoading(true);
@@ -32,12 +35,11 @@ export default function Game() {
     }
   };
 
-  // Load first puzzle
   useEffect(() => {
     fetchPuzzle();
   }, []);
 
-  // Timer
+  // ✅ Timer logic
   useEffect(() => {
     if (isFinished) return;
     const timer = setInterval(() => {
@@ -46,7 +48,7 @@ export default function Game() {
     return () => clearInterval(timer);
   }, [isFinished]);
 
-  // Handle Enter key for submit
+  // ✅ Handle Enter key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter" && !isFinished) {
@@ -57,7 +59,7 @@ export default function Game() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   });
 
-  // Check answer
+  // ✅ Check answer
   const checkAnswer = () => {
     if (!puzzle || isFinished) return;
 
@@ -71,7 +73,8 @@ export default function Game() {
       setFeedback("✅ Correct!");
       const nextCount = questionCount + 1;
 
-      if (nextCount < 3) {
+      if (nextCount < 1) {
+        // currently only 1 round (can increase later)
         setTimeout(() => {
           setQuestionCount(nextCount);
           fetchPuzzle();
@@ -82,7 +85,6 @@ export default function Game() {
     } else {
       setFeedback("❌ Wrong! +30s penalty!");
       setPenalty((prev) => prev + 30);
-
       setTimeout(() => {
         fetchPuzzle();
       }, 1000);
@@ -91,31 +93,52 @@ export default function Game() {
     setAnswer("");
   };
 
-  // Restart game
+  // ✅ Restart Game
   const handleRestart = () => {
     setQuestionCount(0);
     setSeconds(0);
     setPenalty(0);
     setIsFinished(false);
+    setSaving(false);
+    setSaveMessage("");
     fetchPuzzle();
   };
 
   const finalTime = seconds + penalty;
   const formatTime = (t) => (t < 10 ? `0${t}` : t);
 
+  // ✅ Save score after finishing
+  useEffect(() => {
+    const saveUserScore = async () => {
+      if (!isFinished) return;
+      if (!auth.currentUser) return;
+
+      setSaving(true);
+      try {
+        // ✅ only pass uid and time
+        await saveScore(auth.currentUser.uid, finalTime);
+        setSaveMessage("✅ Your time has been saved!");
+      } catch (err) {
+        console.error("Error saving score:", err);
+        setSaveMessage("❌ Failed to save time. Try again.");
+      } finally {
+        setSaving(false);
+      }
+    };
+
+    saveUserScore();
+  }, [isFinished, finalTime]);
+
   return (
     <div className="game-page">
-      {/* Restart button (top-left) */}
       <div className="restart-button">
         🔁 <button onClick={handleRestart}>Restart</button>
       </div>
 
-      {/* Timer (top-right) */}
       <div className="timer-display">⏱️ {formatTime(seconds)}s</div>
 
       <Navbar />
 
-      {/* Game content */}
       {!isFinished ? (
         <div className="game-container">
           <h2>Round {questionCount + 1}</h2>
@@ -150,7 +173,6 @@ export default function Game() {
           )}
         </div>
       ) : (
-        // === Result Section (moved outside game-container) ===
         <div className="result-section">
           <h2 className="result-title">🎉 Challenge Complete!</h2>
 
@@ -166,13 +188,34 @@ export default function Game() {
           </p>
 
           <div className="result-buttons">
-            <button className="btn play-again" onClick={handleRestart}>
+            <button
+              className="btn play-again"
+              onClick={handleRestart}
+              disabled={saving}
+            >
               Play Again
             </button>
             <button className="btn home" onClick={() => navigate("/")}>
               Go Home
             </button>
+            <button
+              className="btn leaderboard"
+              onClick={() => navigate("/leaderboard")}
+            >
+              View Leaderboard
+            </button>
           </div>
+
+          {saveMessage && <p className="save-message">{saveMessage}</p>}
+
+          {!auth.currentUser && (
+            <div className="signin-prompt">
+              🔴 Sign in to save your score!{" "}
+              <button className="btn signin" onClick={() => navigate("/auth")}>
+                Sign In
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

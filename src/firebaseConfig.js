@@ -1,7 +1,6 @@
-// firebaseConfig.js
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getDatabase } from "firebase/database"; // ✅ Add this
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAXHVSJcx5c_3_KuAclPqjrnhuRVOGQRDo",
@@ -13,10 +12,9 @@ const firebaseConfig = {
     measurementId: "G-93J65T6J4C"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-const db = getDatabase(app); // ✅ Initialize Realtime Database
+const db = getDatabase(app);
 
 export { auth, provider, db };

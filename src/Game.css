@@ -10,10 +10,10 @@
     text-align: center;
 }
 
-
-/* === Background & Page Layout === */
-
 .game-page {
+    height: 100vh;
+    /* full viewport height */
+    overflow: hidden;
     min-height: 100vh;
     background: linear-gradient(to bottom right, #fef3c7, #fff7ed, #ffe4e6);
     font-family: "Poppins", sans-serif;
@@ -275,19 +275,27 @@ h2 {
 }
 
 .btn.play-again {
-    background-color: #fbbf24;
+    background-color: #ffb700;
 }
 
 .btn.play-again:hover {
-    background-color: #f59e0b;
+    background-color: #f8c05f;
 }
 
 .btn.home {
-    background-color: #34d399;
+    background-color: #09bd7b;
 }
 
 .btn.home:hover {
     background-color: #059669;
+}
+
+.btn.leaderboard {
+    background-color: #249ee4;
+}
+
+.btn.leaderboard:hover {
+    background-color: #1d7fb7;
 }
 
 
@@ -323,4 +331,39 @@ h2 {
 
 .restart-button button:hover {
     transform: scale(1.05);
+}
+
+.signin-prompt {
+    margin-top: 35px;
+    margin-bottom: 0px;
+    padding: 0px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.signin-prompt .btn.signin {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #ff00ae77;
+    color: #2f313b;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.signin-prompt .btn.signin:hover {
+    background-color: #fc04ad9a;
+}
+
+
+/* Save message below result buttons */
+
+.save-message {
+    margin-top: 30px;
+    /* space above the message */
+    font-weight: bold;
+    color: #055718eb;
+    /* green for success */
+    text-align: center;
 }

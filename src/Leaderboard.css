@@ -86,8 +86,8 @@
 .table-header {
     display: flex;
     justify-content: space-between;
-    background: linear-gradient(90deg, #edac07, #fb923c);
-    color: white;
+    background: linear-gradient(90deg, #ff8800cb, #fb923c);
+    color: rgb(79, 49, 49);
     font-weight: 600;
     padding: 12px 20px;
 }
@@ -172,7 +172,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    color: #b45309;
+    color: #a24a07;
 }
 
 .name {
@@ -186,4 +186,38 @@
 .clock {
     font-size: 1rem;
     margin-right: 4px;
+}
+
+
+/* === Top 3 Row Backgrounds === */
+
+.table-row.gold {
+    background: linear-gradient(90deg, #f6eb9d, #fff8c4);
+    color: #5a4b00;
+    font-weight: 600;
+}
+
+.table-row.silver {
+    background: linear-gradient(90deg, #f0f0f0, #e7e7e7);
+    color: #4a4a4a;
+    font-weight: 600;
+}
+
+.table-row.bronze {
+    background: linear-gradient(90deg, #dbba88, #e0a96d);
+    color: #5b3a00;
+    font-weight: 600;
+}
+
+
+/* === Default rows (after 3rd place) === */
+
+
+/* === Default (non-top3) medal background === */
+
+.table-row:not(.gold):not(.silver):not(.bronze) .medal {
+    background: #484141;
+    /* black background */
+    color: #fff;
+    /* white text inside */
 }
