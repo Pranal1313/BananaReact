@@ -303,14 +303,14 @@ h2 {
 
 .restart-button {
     position: fixed;
-    top: 80px;
-    left: 20px;
+    top: 120px;
+    left: 29px;
     z-index: 9999;
     background-color: #fff9e6;
-    padding: 6px 12px;
-    border-radius: 12px;
+    padding: 6px 6px;
+    border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #4c4646;
     user-select: none;
@@ -330,7 +330,7 @@ h2 {
 }
 
 .restart-button button:hover {
-    transform: scale(1.05);
+    transform: scale(1.15);
 }
 
 .signin-prompt {
@@ -355,9 +355,6 @@ h2 {
 .signin-prompt .btn.signin:hover {
     background-color: #fc04ad9a;
 }
-
-
-/* Save message below result buttons */
 
 .save-message {
     margin-top: 30px;

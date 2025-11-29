@@ -1,29 +1,82 @@
 // main.jsx
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "./App";                  // Home page
-import Game from "./Game";     // Game page
-import Auth from "./Auth";                // Sign In / Sign Up page
-import Leaderboard from "./Leaderboard";  // 🏆 Leaderboard page
+
+import App from "./App";
+import Game from "./Game";
+import Auth from "./Auth";
+import Leaderboard from "./Leaderboard";
 import "./index.css";
+
+function Root() {
+  const audioRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(false);
+
+  // 🔊 Auto-play music on load
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 0.5; // optional softer volume
+      audio.play().catch(() => {
+        // Browser might block autoplay until user interacts once
+        console.log("Autoplay blocked — will play after first click.");
+        document.addEventListener("click", () => {
+          audio.play();
+        }, { once: true });
+      });
+    }
+  }, []);
+
+  const toggleMute = () => {
+    if (!audioRef.current) return;
+    audioRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  return (
+    <>
+      {/* === GLOBAL AUDIO PLAYER === */}
+      <audio ref={audioRef} src="/bgmusic.mp3" loop />
+
+      {/* MUTE BUTTON ONLY */}
+      <button
+        onClick={toggleMute}
+        style={{
+          position: "fixed",
+          top: "80px",
+          left: "30px",
+          zIndex: 9999,
+          padding: "5px 9px",
+          borderRadius: "8px",
+          fontWeight: "600",
+          backgroundColor: "#fff9e6",
+          border: "none",
+          cursor: "pointer",
+          boxShadow: "0px 2px 5px rgba(0,0,0,0.2)",
+        
+
+          
+        }}
+      >
+        {isMuted ? "Unmute 🔊" : "Mute 🔇"}
+      </button>
+
+      {/* === ROUTING === */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/auth" element={<Auth />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+}
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* 🏠 Home page */}
-        <Route path="/" element={<App />} />
-
-        {/* 🎮 Game page */}
-        <Route path="/game" element={<Game />} />
-
-        {/* 🏆 Leaderboard page */}
-        <Route path="/Leaderboard" element={<Leaderboard />} />
-
-        {/* 🔐 Sign-in / Auth page */}
-        <Route path="/auth" element={<Auth />} />
-      </Routes>
-    </BrowserRouter>
+    <Root />
   </React.StrictMode>
 );

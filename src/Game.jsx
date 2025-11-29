@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import { useNavigate } from "react-router-dom";
 import "./Game.css";
-import { saveScore } from "./Score"; // ✅ Correct import
+import { saveScore } from "./Score";
 import { auth } from "./firebaseConfig";
 
 export default function Game() {
@@ -20,7 +20,7 @@ export default function Game() {
 
   const navigate = useNavigate();
 
-  // ✅ Fetch puzzle
+  // Fetch puzzle
   const fetchPuzzle = async () => {
     try {
       setLoading(true);
@@ -39,7 +39,7 @@ export default function Game() {
     fetchPuzzle();
   }, []);
 
-  // ✅ Timer logic
+  // Timer
   useEffect(() => {
     if (isFinished) return;
     const timer = setInterval(() => {
@@ -48,7 +48,7 @@ export default function Game() {
     return () => clearInterval(timer);
   }, [isFinished]);
 
-  // ✅ Handle Enter key
+  // Enter key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter" && !isFinished) {
@@ -59,7 +59,7 @@ export default function Game() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   });
 
-  // ✅ Check answer
+  // Check answer
   const checkAnswer = () => {
     if (!puzzle || isFinished) return;
 
@@ -73,8 +73,7 @@ export default function Game() {
       setFeedback("✅ Correct!");
       const nextCount = questionCount + 1;
 
-      if (nextCount < 1) {
-        // currently only 1 round (can increase later)
+      if (nextCount < 3) {
         setTimeout(() => {
           setQuestionCount(nextCount);
           fetchPuzzle();
@@ -93,7 +92,7 @@ export default function Game() {
     setAnswer("");
   };
 
-  // ✅ Restart Game
+  // Restart game
   const handleRestart = () => {
     setQuestionCount(0);
     setSeconds(0);
@@ -107,7 +106,7 @@ export default function Game() {
   const finalTime = seconds + penalty;
   const formatTime = (t) => (t < 10 ? `0${t}` : t);
 
-  // ✅ Save score after finishing
+  // Save score
   useEffect(() => {
     const saveUserScore = async () => {
       if (!isFinished) return;
@@ -115,7 +114,6 @@ export default function Game() {
 
       setSaving(true);
       try {
-        // ✅ only pass uid and time
         await saveScore(auth.currentUser.uid, finalTime);
         setSaveMessage("✅ Your time has been saved!");
       } catch (err) {
@@ -131,10 +129,12 @@ export default function Game() {
 
   return (
     <div className="game-page">
+      {/* 🔁 Restart button */}
       <div className="restart-button">
         🔁 <button onClick={handleRestart}>Restart</button>
       </div>
 
+      {/* Timer */}
       <div className="timer-display">⏱️ {formatTime(seconds)}s</div>
 
       <Navbar />
