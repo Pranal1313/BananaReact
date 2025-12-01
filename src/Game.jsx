@@ -4,7 +4,8 @@ import Navbar from "./components/Navbar";
 import { useNavigate } from "react-router-dom";
 import "./Game.css";
 import { saveScore } from "./Score";
-import { auth } from "./firebaseConfig";
+import { auth, db } from "./firebaseConfig";
+import { ref, onValue } from "firebase/database";
 
 export default function Game() {
   const [puzzle, setPuzzle] = useState(null);
@@ -18,9 +19,35 @@ export default function Game() {
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
+  const [userInfo, setUserInfo] = useState({
+    username: "Guest"    // default when not logged in
+  });
+
   const navigate = useNavigate();
 
-  // Fetch puzzle
+  // Fetch username for avatar box
+  useEffect(() => {
+    if (!auth.currentUser) {
+      setUserInfo({ username: "Guest" });
+      return;
+    }
+
+    const userRef = ref(db, `leaderboard/${auth.currentUser.uid}`);
+
+    const unsubscribe = onValue(userRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        setUserInfo({
+          username: data.username || "Anonymous",
+        });
+      } else {
+        setUserInfo({ username: "Anonymous" });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const fetchPuzzle = async () => {
     try {
       setLoading(true);
@@ -39,7 +66,6 @@ export default function Game() {
     fetchPuzzle();
   }, []);
 
-  // Timer
   useEffect(() => {
     if (isFinished) return;
     const timer = setInterval(() => {
@@ -48,7 +74,6 @@ export default function Game() {
     return () => clearInterval(timer);
   }, [isFinished]);
 
-  // Enter key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter" && !isFinished) {
@@ -59,7 +84,6 @@ export default function Game() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   });
 
-  // Check answer
   const checkAnswer = () => {
     if (!puzzle || isFinished) return;
 
@@ -92,7 +116,6 @@ export default function Game() {
     setAnswer("");
   };
 
-  // Restart game
   const handleRestart = () => {
     setQuestionCount(0);
     setSeconds(0);
@@ -104,9 +127,10 @@ export default function Game() {
   };
 
   const finalTime = seconds + penalty;
+
   const formatTime = (t) => (t < 10 ? `0${t}` : t);
 
-  // Save score
+  // Save score to database
   useEffect(() => {
     const saveUserScore = async () => {
       if (!isFinished) return;
@@ -129,15 +153,21 @@ export default function Game() {
 
   return (
     <div className="game-page">
-      {/* 🔁 Restart button */}
+      <Navbar />
+
+      {/* Avatar + Username box */}
+      <div className="player-info-box">
+        <div className="player-avatar">
+          {userInfo.username.charAt(0).toUpperCase()}
+        </div>
+        <div className="player-name">{userInfo.username}</div>
+      </div>
+
       <div className="restart-button">
         🔁 <button onClick={handleRestart}>Restart</button>
       </div>
 
-      {/* Timer */}
       <div className="timer-display">⏱️ {formatTime(seconds)}s</div>
-
-      <Navbar />
 
       {!isFinished ? (
         <div className="game-container">

@@ -92,7 +92,7 @@ export default function Auth() {
 
       <div className={`auth-page ${!isLogin ? "signup-page" : ""}`}>
         <div className="auth-wrapper">
-          {/* 🍌 Only show banana icon on login page */}
+         
           {isLogin && <div className="auth-icon">🍌</div>}
 
           {isLogin ? (
@@ -161,7 +161,6 @@ export default function Auth() {
                 {isLogin ? "Sign In" : "Create Account"}
               </button>
 
-              {/* ✅ Styled Google Sign-in Button */}
               <button
                 type="button"
                 onClick={handleGoogleLogin}

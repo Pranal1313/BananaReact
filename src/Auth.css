@@ -107,9 +107,6 @@ html {
     transform: scale(1.03);
 }
 
-
-/* ✅ Google Button Styling */
-
 .google-btn {
     display: flex;
     align-items: center;
@@ -133,9 +130,6 @@ html {
     transform: translateY(-1px);
 }
 
-
-/* Footer links */
-
 .auth-footer {
     margin-top: 16px;
     color: #555;
@@ -152,9 +146,6 @@ html {
     text-decoration: underline;
     color: #3c1203;
 }
-
-
-/* Signup tweaks */
 
 .signup-page .auth-card {
     width: 300px;
@@ -184,9 +175,6 @@ html {
 .signup-page .auth-icon {
     display: none;
 }
-
-
-/* ✅ Match Google button style to main buttons */
 
 .google-btn.match-auth {
     display: flex;

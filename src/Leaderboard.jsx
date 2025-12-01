@@ -1,4 +1,3 @@
-// src/Leaderboard.jsx
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import "./Leaderboard.css";
@@ -11,7 +10,7 @@ export default function Leaderboard() {
   useEffect(() => {
     const leaderboardRef = ref(db, "leaderboard");
 
-    // ✅ Listen for real-time updates
+    // real-time updates
     const unsubscribe = onValue(leaderboardRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -21,7 +20,7 @@ export default function Leaderboard() {
           time: data[key].time || 0,
         }));
 
-        // ✅ Sort ascending by time
+        // Sort ascending by time
         scoreArray.sort((a, b) => a.time - b.time);
 
         setPlayers(scoreArray);
@@ -30,7 +29,6 @@ export default function Leaderboard() {
       }
     });
 
-    // ✅ Cleanup on unmount
     return () => unsubscribe();
   }, []);
 

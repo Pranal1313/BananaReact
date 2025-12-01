@@ -1,4 +1,4 @@
-// main.jsx
+
 import React, { useRef, useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -13,13 +13,13 @@ function Root() {
   const audioRef = useRef(null);
   const [isMuted, setIsMuted] = useState(false);
 
-  // 🔊 Auto-play music on load
+
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
-      audio.volume = 0.5; // optional softer volume
+      audio.volume = 0.5; 
       audio.play().catch(() => {
-        // Browser might block autoplay until user interacts once
+        
         console.log("Autoplay blocked — will play after first click.");
         document.addEventListener("click", () => {
           audio.play();
@@ -36,33 +36,34 @@ function Root() {
 
   return (
     <>
-      {/* === GLOBAL AUDIO PLAYER === */}
+
       <audio ref={audioRef} src="/bgmusic.mp3" loop />
 
-      {/* MUTE BUTTON ONLY */}
       <button
         onClick={toggleMute}
-        style={{
-          position: "fixed",
-          top: "80px",
-          left: "30px",
-          zIndex: 9999,
-          padding: "5px 9px",
-          borderRadius: "8px",
-          fontWeight: "600",
-          backgroundColor: "#fff9e6",
-          border: "none",
-          cursor: "pointer",
-          boxShadow: "0px 2px 5px rgba(0,0,0,0.2)",
-        
+  style={{
+  position: "fixed",
+  top: "80px",
+  left: "29px",
+  zIndex: 9999,
+  padding: "8px 27px",
+  width: "118px",          
+  borderRadius: "10px",
+  fontWeight: "600",
+  backgroundColor: "#fff9e6",
+  border: "none",
+  cursor: "pointer",
+  boxShadow: "0px 2px 5px rgba(0,0,0,0.2)",
+  whiteSpace: "nowrap",   
+  overflow: "hidden",      
+}}
 
-          
-        }}
+
       >
         {isMuted ? "Unmute 🔊" : "Mute 🔇"}
       </button>
 
-      {/* === ROUTING === */}
+     
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />

@@ -21,7 +21,7 @@ export default function Navbar() {
     try {
       await signOut(auth);
       setUser(null);
-      navigate("/auth"); // redirect to login page
+      navigate("/auth"); 
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -30,13 +30,13 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Left: Logo */}
+       
         <div className="navbar-logo">
           <span className="navbar-emoji">🍌</span>
           <span className="navbar-title">Banana Brain Challenge</span>
         </div>
 
-        {/* Right: Links */}
+  
         <div className="navbar-links">
           <Link to="/" className="navbar-link">
             Home
@@ -59,7 +59,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Icon */}
+     
         <Button variant="ghost" size="icon" className="navbar-menu-btn">
           <Menu className="menu-icon" />
         </Button>

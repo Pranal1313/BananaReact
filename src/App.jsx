@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
 import { Card } from "./components/ui/card";
@@ -37,33 +36,44 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-pink-100 font-sans text-gray-800 relative overflow-hidden mt-[-20px]">
-
-      {/* === Navbar === */}
+    <div
+      className="
+        min-h-screen 
+        bg-gradient-to-br 
+        from-[#FFECC9] 
+        via-[#FFE0BE] 
+        to-[#FFD6C9] 
+        font-sans 
+        text-gray-800 
+        relative 
+        overflow-hidden 
+        mt-[-20px]
+      "
+    >
       <Navbar />
 
-      {/* === Floating Bananas (Background Animation) === */}
+      {/* Floating Bananas */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute top-60 left-10 text-5xl opacity-40"
-          style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.6)" }}
-          animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        >
-          🍌
-        </motion.div>
+<motion.div
+  className="absolute top-60 left-10 text-5xl opacity-65"
+  style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.6)" }}
+  animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
+  transition={{ duration: 4, repeat: Infinity }}
+>
+  🍌
+</motion.div>
 
-        <motion.div
-          className="absolute top-53 right-20 text-5xl opacity-40"
-          style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.6)" }}
-          animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
-        >
-          🍌
-        </motion.div>
+<motion.div
+  className="absolute top-53 right-20 text-5xl opacity-65"
+  style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.6)" }}
+  animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
+  transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+>
+  🍌
+</motion.div>
       </div>
 
-      {/* === Main Content === */}
+      {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-16 text-center relative z-10 mt-20">
         <motion.div
           animate={{ rotate: [0, 10, -10, 0] }}
@@ -78,7 +88,8 @@ export default function App() {
         </h1>
 
         <p className="text-xl text-gray-700 max-w-2xl mx-auto mb-12 font-normal">
-          Put your math skills to the test! Solve equations, beat the clock, and become a mental math master.
+          Put your math skills to the test! Solve equations, beat the clock, and
+          become a mental math master.
         </p>
 
         <Link to="/game" style={{ textDecoration: "none" }}>
@@ -107,9 +118,12 @@ export default function App() {
             </h2>
 
             <div className="space-y-4">
-              <p className="text-center text-2xl ">
+              <p className="text-center text-2xl">
                 Welcome to the Banana Brain Challenge{" "}
-                <span style={{ fontFamily: "'Lobster', cursive" }}>{username}</span> ! 🍌
+                <span style={{ fontFamily: "'Lobster', cursive" }}>
+                  {username}
+                </span>{" "}
+                ! 🍌
               </p>
 
               <ul className="space-y-3 text-lg font-normal">
@@ -123,7 +137,9 @@ export default function App() {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-orange-500 mt-0">3.</span>
-                  <span>For each wrong answer a <strong>+30s</strong> penalty will be added.</span>
+                  <span>
+                    For each wrong answer a <strong>+30s</strong> penalty will be added.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-orange-500 mt-0">4.</span>
